@@ -8,8 +8,6 @@
   date_of_birth {label: "bigint, not null"}
   profile_image {label: "varchar, null"}
   avator_image {label: "varchar, null"}
-  followers {label: "array, null"}
-  bookmarked_tweets { label: "array, null, FK(tweets)"}
   has_notified_new_like {label: "boolean, null"}
   has_notified_new_follower {label: "boolean, null"}
   created_at { label: "datatime, not null"}
@@ -17,19 +15,76 @@
 
 [tweets] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
-  tweeted_user_id {label: "bigint, not null, FK(users)"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+
+[tweet_texts] {bgcolor: "#d0e0d0"}
+  *id {label: "bigint, not null"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
   tweet_text {label: "varchar(140), not null"}
-  retweeted_users {label: "array, null"}
-  liked_users {label: "array, null"}
-  bookmarked_users {label: "array, null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[retweeted_users] {bgcolor: "#d0e0d0"}
+  *id {label: "bigint, not null"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  user_id {label: "bigint, not null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[liked_users] {bgcolor: "#d0e0d0"}
+  *id {label: "bigint, not null"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  user_id {label: "bigint, not null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[bookmarked_users] {bgcolor: "#d0e0d0"}
+  *id {label: "bigint, not null"}
+  tweet_id {label: "bigint, not null, FK(tweets)"}
+  user_id {label: "bigint, not null"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, null"}
 
 [messages] {bgcolor: "#f0ffff"}
   *id {label: "bigint, not null"}
-  sent_user_id {label: "bigint, not null, FK(users)"}
+  user_id {label: "bigint, not null, FK(users)"}
   received_user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[message_texts] {bgcolor: "#f0ffff"}
+  *id {label: "bigint, not null"}
+  message_id {label: "bigint, not null, FK(messages)"}
   message_text {label: "varchar, null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[followers] {bgcolor: "#faa0a0"}
+  *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[follower_users] {bgcolor: "#faa0a0"}
+  *id {label: "bigint, not null"}
+  follower_id {label: "bigint, not null, FK(followers)"}
+  user_id { label: "bigint, not null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[bookmark] {bgcolor: "#e6e6fa"}
+  *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, null"}
+
+[bookmark_tweets] {bgcolor: "#e6e6fa"}
+  *id {label: "bigint, not null"}
+  bookmark_id {label: "bigint, not null, FK(bookmark)"}
+  tweet_id { label: "bigint, not null"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, null"}
 
@@ -38,5 +93,14 @@
 # exactly 1      1
 # 0 or more      *
 # 1 or more      +
-users 1--* `tweets`
-users 1--* `messages`
+users 1--1 `tweets`
+users 1--1 `messages`
+users 1--1 `followers`
+users 1--1 `bookmark`
+tweets 1--* `tweet_texts`
+tweets 1--* `retweeted_users`
+tweets 1--* `liked_users`
+tweets 1--* `bookmarked_users`
+messages 1--* `message_texts`
+followers 1--* `follower_users`
+bookmark 1--* `bookmark_tweets`
