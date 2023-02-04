@@ -8,8 +8,6 @@
   date_of_birth {label: "bigint, not null"}
   profile_image {label: "varchar, null"}
   avator_image {label: "varchar, null"}
-  has_notified_new_like {label: "boolean, null"}
-  has_notified_new_follower {label: "boolean, null"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, null"}
 
