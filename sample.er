@@ -54,13 +54,6 @@
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, null"}
 
-[bookmarks] {bgcolor: "#e6e6fa"}
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users)"}
-  tweet_id { label: "bigint, not null"}
-  created_at { label: "datatime, not null"}
-  updated_at { label: "datatime, null"}
-
 [notifications] {bgcolor: "#f5f5dc"}
   *id {label: "bigint, not null"}
   user_id {label: "bigint, not null, FK(users)"}
@@ -90,7 +83,6 @@ updated_at { label: "datatime, null"}
 users 1--* `tweets`
 users 1--* `messages`
 users 1--* `followers`
-users 1--* `bookmarks`
 users 1--* `notifications`
 tweets 1--* `retweeted_users`
 tweets 1--* `liked_users`
